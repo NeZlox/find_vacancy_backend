@@ -26,7 +26,7 @@ class Common_Service:
             }
             result_vacancies_DTO.append(Vacancy_DTO(**vacancy_dict))
 
-        remaining = nikon(result_vacancies_DTO)
+        remaining = result_vacancies_DTO #await nikon(result_vacancies_DTO)
         return remaining
 
     @staticmethod
