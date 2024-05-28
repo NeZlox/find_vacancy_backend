@@ -70,4 +70,4 @@ async def add_process_time_header(request: Request, call_next):
 # celery -A src.tasks.celery_app:celery worker --loglevel=INFO --concurrency=4 --pool=threads
 # celery -A src.tasks.celery_app:celery worker --loglevel=INFO --concurrency=4 --pool=threads -n worker1@%h
 # celery -A src.tasks.celery_app:celery worker --loglevel=INFO --concurrency=4 --pool=threads -n worker2@%h
-
+# ca6de506067087bdc67d062ec9b23c6ce6017077
