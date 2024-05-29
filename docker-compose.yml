@@ -7,7 +7,8 @@ services:
     ports:
       - "16740:80"
     depends_on:
-      - vacancy_frontend
+      #- vacancy_frontend
+      - flower
     volumes:
       - "./nginx.conf:/etc/nginx/conf.d/default.conf"
     restart: always
@@ -45,53 +46,40 @@ services:
     depends_on:
       - db
       - redis
-    working_dir: /calendar
+    working_dir: /vacancy
     command: sh -c "sleep 10 && alembic upgrade head && gunicorn src.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
     #ports:
     #  - "15560:8000"
 
-  vacancy_frontend:
-    image: vacancy_frontend:latest
-    restart: always
-    container_name: vacancy_frontend
-    depends_on:
-      - db
-      - redis
-      - vacancy_backend
+
+
 
 
   celery_worker:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: vacancy_celery:latest
+    image: vacancy_backend:latest
     restart: always
-    container_name: vacancy_celery_worker
-    env_file:
-      - .env
+    container_name: celery_worker
     depends_on:
-      - db
-      - redis
-    command: celery -A src.tasks.celery_app:celery worker --loglevel=${LOG_LEVEL} --concurrency=4 --pool=threads
+      - vacancy_backend
     volumes:
-      - .:/app
+      - .:/vacancy
+    command: ["celery", "-A", "src.tasks.celery_app:celery", "worker", "--loglevel=INFO", "--pool=solo"]
 
   flower:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: vacancy_flower:latest
+    image: vacancy_backend:latest
     restart: always
-    container_name: vacancy_flower
-    env_file:
-      - .env
+    container_name: flower
     depends_on:
-      - redis
-    command: celery -A src.tasks.tasks:celery flower --port=5555
-    ports:
-      - "5555:5555"
+      - celery_worker
     volumes:
-      - .:/app
+      - .:/vacancy
+    command: ["celery", "-A", "src.tasks.tasks:celery", "flower",  "--url_prefix=/flower"]
+
+
 
 volumes:
   db_data:
