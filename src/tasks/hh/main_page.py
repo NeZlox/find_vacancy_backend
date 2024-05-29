@@ -13,7 +13,9 @@ __all__ = ['main_page_async']
 async def main_page_process(country: str, name:str, page:int) -> List[str]:
     #thread_id = threading.get_ident()
     #logger.info(f"Thread {thread_id}: Processing page {page}")
-    url = f'https://{country}.hh.ru/vacancies/{name}?page={page}'
+    #url = f'https://{country}.hh.ru/vacancies/{name}?page={page}'
+    url = f'https://{country}.hh.ru/search/vacancy?text={name}&page={page}'
+
     content_bs4 = await get_content(url)
     data = []
     if content_bs4:
