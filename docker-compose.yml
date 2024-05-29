@@ -84,6 +84,13 @@ services:
     command: ["celery", "-A", "src.tasks.tasks:celery", "flower",  "--url_prefix=/flower"]
 
 
+#  vacancy_frontend:
+#    image: vacancy_frontend:latest
+#    restart: always
+#    container_name: vacancy_frontend
+#    depends_on:
+#      - flower
+
 
 volumes:
   db_data:
