@@ -10,6 +10,7 @@ from src.common.schemas import Vacancy_DTO
 
 
 model_path = "src/models/ai-forever_ruBert-large"
+
 # ai-forever/ruBert-large
 tokenizer = BertTokenizer.from_pretrained(model_path)
 # ai-forever/ruBert-large
