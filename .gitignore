@@ -4,4 +4,4 @@ venv/
 .env
 .git/
 README.md
-src/models/ai-forever_ruBert-large/
+src/models/ai-forever_ruBert-large/pytorch_model.bin
