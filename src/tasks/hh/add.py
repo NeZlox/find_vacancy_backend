@@ -8,6 +8,7 @@ from src.config import settings
 from src.database.models import *
 from src.logger import logger
 from src.tasks.celery_app import celery
+import datetime
 
 sync_engine = create_engine(settings.DATABASE_URL_SYNC,pool_size=5, max_overflow=10 )#echo=True)
 SyncSessionLocal = sessionmaker(
@@ -55,6 +56,7 @@ def insert_db(info_vacancy: Dict[str, Any]):
                 existing_vacancy.work_format = work_format
                 existing_vacancy.description = description
                 existing_vacancy.vacancy_vector = vacancy_vector
+                existing_vacancy.updated_at = datetime.datetime.now(datetime.UTC)
 
                 vacancy_id = existing_vacancy.id
 
