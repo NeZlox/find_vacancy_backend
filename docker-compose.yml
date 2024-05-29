@@ -65,7 +65,11 @@ services:
       - vacancy_backend
     volumes:
       - .:/vacancy
-    command: ["celery", "-A", "src.tasks.celery_app:celery", "worker", "--loglevel=INFO", "--pool=solo"]
+    #command: ["celery", "-A", "src.tasks.celery_app:celery", "worker", "--loglevel=INFO", "--pool=solo"]
+    command: ["celery", "-A", "src.tasks.celery_app:celery", "worker", "--loglevel=INFO", "--pool=threads", "--concurrency=4"]
+    #command: ["celery", "-A", "src.tasks.celery_app:celery", "worker", "--loglevel=INFO", "--pool=threads", "--concurrency=4", "-n", "worker1@%h"]
+    #command: ["celery", "-A", "src.tasks.celery_app:celery", "worker", "--loglevel=INFO", "--pool=threads", "--concurrency=4", "-n", "worker2@%h"]
+    #command: ["sh", "-c", "celery -A src.tasks.celery_app:celery worker --loglevel=INFO --pool=threads --concurrency=4 -n worker1@%h & celery -A src.tasks.celery_app:celery worker --loglevel=INFO --pool=threads --concurrency=4 -n worker2@%h & wait -n"]
 
   flower:
     build:
