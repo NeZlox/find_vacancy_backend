@@ -4,5 +4,4 @@ venv/
 .env
 .git/
 README.md
-src/common/models--ai-forever--ruBert-large/
-src/common/models--bert-base-cased/
+src/models/

@@ -8,8 +8,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from src.common.schemas import Vacancy_DTO
 
+
+# src/models/models--ai-forever--ruBert-large/
+# ai-forever/ruBert-large
 tokenizer = BertTokenizer.from_pretrained('ai-forever/ruBert-large')
+# src/models/models--bert-base-cased/
+# ai-forever/ruBert-large
 model = BertModel.from_pretrained('ai-forever/ruBert-large')
+
 
 
 async def find_matching_jobs(data: List[Vacancy_DTO], search_line: str, n_top: int=10) -> List[Vacancy_DTO]:
