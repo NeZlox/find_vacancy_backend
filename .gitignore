@@ -4,4 +4,4 @@ venv/
 .env
 .git/
 README.md
-src/models/
+src/models/ai-forever_ruBert-large/
