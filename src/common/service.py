@@ -1,7 +1,6 @@
 from src.common.schemas import Vacancy_DTO
-from src.common.utils import nikon
+from src.common.utils import find_matching_jobs
 from src.database.queries import Vacancy_Query
-from src.tasks import parse_hh
 
 
 class Common_Service:
@@ -26,11 +25,12 @@ class Common_Service:
             }
             result_vacancies_DTO.append(Vacancy_DTO(**vacancy_dict))
 
-        remaining = result_vacancies_DTO #await nikon(result_vacancies_DTO)
+        remaining = await find_matching_jobs(result_vacancies_DTO, search_line)
         return remaining
 
     @staticmethod
     async def start_parsing(country: str, name: str, page_start: int, page_end: int):
+        from src.tasks import parse_hh
         parse_hh.delay(country, name, page_start, page_end)
         return None
 

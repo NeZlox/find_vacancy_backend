@@ -12,6 +12,7 @@ def parse_hh(country:str ='volgograd',name:str ='programmist', page_start:int=0,
     try:
         asyncio.set_event_loop(loop)
         results = loop.run_until_complete(main_page_async(country, name, page_start, page_end))
+
         # logger.info(f"Функция sub_page_task {results}")
         for page, result in enumerate(results, start=page_start):
             # Передать в другую таску sub_page

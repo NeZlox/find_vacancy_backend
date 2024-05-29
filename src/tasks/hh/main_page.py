@@ -15,6 +15,7 @@ async def main_page_process(country: str, name:str, page:int) -> List[str]:
     #logger.info(f"Thread {thread_id}: Processing page {page}")
     #url = f'https://{country}.hh.ru/vacancies/{name}?page={page}'
     url = f'https://{country}.hh.ru/search/vacancy?text={name}&page={page}'
+    logger.info(f"\nUrl main_page  {url}\n")
 
     content_bs4 = await get_content(url)
     data = []

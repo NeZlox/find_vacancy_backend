@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from sqlalchemy import create_engine, delete
 from sqlalchemy.exc import SQLAlchemyError
@@ -9,8 +9,10 @@ from src.database.models import *
 from src.logger import logger
 from src.tasks.celery_app import celery
 import datetime
+import asyncio
+from src.common.utils import get_bert_embedding
 
-sync_engine = create_engine(settings.DATABASE_URL_SYNC,pool_size=5, max_overflow=10 )#echo=True)
+sync_engine = create_engine(settings.DATABASE_URL_SYNC, pool_size=5, max_overflow=10)  # echo=True)
 SyncSessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
@@ -18,19 +20,27 @@ SyncSessionLocal = sessionmaker(
     expire_on_commit=False
 )
 
-def nikon():
-    pass
+
+def get_vacancy_vector(title: Optional[str], salary: Optional[str], experience: Optional[str],
+                       work_format: Optional[str], description: Optional[str], skills: Optional[List[str]]):
+    combined_text = ' '.join(filter(None, [title, salary,
+                                           experience, work_format,
+                                           description,
+                                           ' '.join(skills) if skills else ""]))
+    result = asyncio.run(get_bert_embedding(combined_text))
+    return str(result.tobytes())
+
 
 def insert_db(info_vacancy: Dict[str, Any]):
-
     url = info_vacancy['url']
     title = info_vacancy.get('title')
     salary = info_vacancy.get('salary')
     experience = info_vacancy.get('experience')
     work_format = info_vacancy.get('work_format')
     description = info_vacancy.get('description')
-    vacancy_vector = nikon()
     skills = info_vacancy.get('skills')
+    vacancy_vector = get_vacancy_vector(title=title, salary=salary, experience=experience, work_format=work_format,
+                                        description=description, skills=skills)
 
     with SyncSessionLocal() as Session:
         try:
@@ -91,12 +101,12 @@ def insert_db(info_vacancy: Dict[str, Any]):
 
                     new_id_skill.add(new_skill.id)
                     # Проверяем существует ли связь между вакансией и навыком
-                    existing_relation = Session.query(skills_to_vacancyModel).filter_by(id_skill=new_skill.id, id_vacancy=vacancy_id).first()
+                    existing_relation = Session.query(skills_to_vacancyModel).filter_by(id_skill=new_skill.id,
+                                                                                        id_vacancy=vacancy_id).first()
                     if not existing_relation:
                         # Создаем новую связь между вакансией и навыком
                         new_relation = skills_to_vacancyModel(id_skill=new_skill.id, id_vacancy=vacancy_id)
                         Session.add(new_relation)
-
 
             existing_id_skill = Session.query(skills_to_vacancyModel.id_skill).filter_by(id_vacancy=vacancy_id).all()
             existing_id_skill = {record.id_skill for record in existing_id_skill}
@@ -115,12 +125,7 @@ def insert_db(info_vacancy: Dict[str, Any]):
             logger.info(f"Функция insert_db\n{e}\n\n")
 
 
-
-
-
-
-
 @celery.task
 def insert_db_task(info_vacancy: Dict[str, Any]):
-    #logger.info(f"Функция insert_db_task {info_vacancy}")
+    # logger.info(f"Функция insert_db_task {info_vacancy}")
     insert_db(info_vacancy)

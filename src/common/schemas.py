@@ -21,8 +21,23 @@ class Vacancy_DTO(Vacancy_Schema):
     skills: Optional[List[str]] = None
 
 
+
+class temp(BaseModel):
+    id: int
+    title: Optional[str] = None
+    salary: Optional[str] = None
+    experience: Optional[str] = None
+    work_format: Optional[str] = None
+    description: Optional[str] = None
+    #vacancy_vector: Optional[str] = None
+
+    #id_url: int
+
+    url: str
+    skills: Optional[List[str]] = None
 class Vacancy_ListResponse(Response_Schemas):
-    data: List[Vacancy_DTO]
+
+    data: List[temp]
 
 
 class Parsing_QueryParams(BaseModel):

@@ -17,7 +17,7 @@ class urlsModel(Base):
     __tablename__ = "urls"
 
     id: Mapped[intpk]
-    url: Mapped[str] = mapped_column(String(256))
+    url: Mapped[str] = mapped_column(Text)
 
     created_at: Mapped[template_created_at]
     updated_at: Mapped[template_updated_at]
@@ -41,7 +41,7 @@ class vacanciesModel(Base):
     experience: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     work_format: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    vacancy_vector: Mapped[Optional[str]] = mapped_column(String(255), nullable=True, server_default=None)
+    vacancy_vector: Mapped[Optional[str]] = mapped_column(Text, nullable=True, server_default=None)
 
     id_url: Mapped[int] = mapped_column(ForeignKey("urls.id", ondelete="CASCADE", onupdate="CASCADE"))
 
