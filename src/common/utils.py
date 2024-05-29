@@ -30,7 +30,7 @@ async def find_matching_jobs(data: List[Vacancy_DTO], search_line: str, n_top: i
     similarities.sort(key=lambda x: x[1], reverse=True)
     result = []
     for vacancy, similarity in similarities[:n_top]:
-        print(similarity, vacancy.title)
+        #print(similarity, vacancy.title)
         result.append(vacancy)
 
     return result
