@@ -9,12 +9,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 from src.common.schemas import Vacancy_DTO
 
 
-# src/models/models--ai-forever--ruBert-large/
+model_path = "src/models/ai-forever_ruBert-large"
 # ai-forever/ruBert-large
-tokenizer = BertTokenizer.from_pretrained('ai-forever/ruBert-large')
-# src/models/models--bert-base-cased/
+tokenizer = BertTokenizer.from_pretrained(model_path)
 # ai-forever/ruBert-large
-model = BertModel.from_pretrained('ai-forever/ruBert-large')
+model = BertModel.from_pretrained(model_path)
 
 
 
