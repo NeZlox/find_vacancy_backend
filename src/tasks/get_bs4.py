@@ -4,6 +4,7 @@ import traceback
 import aiohttp
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+from src.logger import logger
 
 
 async def get_content(url, proxy=None) -> BeautifulSoup | None:
@@ -27,9 +28,10 @@ async def get_content(url, proxy=None) -> BeautifulSoup | None:
             await asyncio.sleep(10)
 
         except Exception as e:
-            print(traceback.format_exc())
-            print(e)
-            print(proxy)
+            logger.error(f"traceback.format_exc()\n\n{e}\n")
+            #print(traceback.format_exc())
+            #print(e)
+            #print(proxy)
             return None
 
     return None
