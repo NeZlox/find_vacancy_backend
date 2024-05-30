@@ -9,6 +9,11 @@ RUN pip install -r requirements.txt
 COPY . .
 
 
+# Make entrypoint.sh executable
+RUN chmod +x entrypoint.sh
+
+# Use the entrypoint.sh script as the entrypoint for the container
+#ENTRYPOINT ["./entrypoint.sh"]
 
 
 
