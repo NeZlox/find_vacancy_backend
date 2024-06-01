@@ -26,8 +26,8 @@ class urlsModel(Base):
         UniqueConstraint('url', name='urls_unique_url'),
     )
 
-    vacancy: Mapped["vacanciesModel"] = relationship(
-        back_populates="url",  # Здесь изменено на "url"
+    vacancy: Mapped["vacanciesModel"] = relationship( # создание переменной и указание подгружаемой модели к текущей модели
+        back_populates="url",  # Здесь изменено на "url" ссылка на переменую в другой таблице
         uselist=False,
         cascade="all, delete"
     )
