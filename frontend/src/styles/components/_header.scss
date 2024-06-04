@@ -1,0 +1,29 @@
+.header {
+    position: sticky;
+    top: 0;
+
+    padding: 2rem .5rem;
+
+    background-color: rgba($black,.7);
+}
+
+.header__inner {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & .header__title {
+        width: 30%;
+    }
+
+    & .input_block {
+        width: 50%;
+    }
+
+    & .header__parse {
+        width: 20%;
+    }
+
+    
+}

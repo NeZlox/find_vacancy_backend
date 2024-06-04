@@ -1,4 +1,3 @@
-venv/
-.git/
-.idea/
-frontend/
+node_modules
+build
+npm-debug.log

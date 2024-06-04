@@ -32,7 +32,7 @@ async def get_vacancy(query_params: findVacancy_QueryParamsSchemas = Depends()):
 async def start_parsing(query_params: Parsing_QueryParams = Depends()):
     try:
         print(query_params)
-        data = await Common_Service.start_parsing(**query_params.model_dump(mode='python'))
+        await Common_Service.start_parsing(**query_params.model_dump(mode='python'))
 
         result = {
             "data": None

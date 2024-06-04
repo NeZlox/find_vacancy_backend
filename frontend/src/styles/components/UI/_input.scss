@@ -1,0 +1,61 @@
+.input_block {
+    display: flex;
+}
+
+.input_block__icon_inner,.input_block__input {
+    background-color: $dark_blue;
+}
+
+.input_block__icon_inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 2rem;
+    padding: 1rem 1.5rem;
+
+    border-radius: $border-radius 0 0 $border-radius;
+
+    &.close {
+        border-radius: 0 $border-radius $border-radius 0;
+        font-size: 2.5rem;
+
+        #icon {
+            cursor: pointer;
+            opacity: 0.5;
+
+            transition: .2s ease-in-out;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &:active {
+                opacity: .8;
+            }
+        }
+    }
+}
+
+.input_block__input {
+    width: 100%;
+    font-size: 1.4rem;
+    font-family: $font-family-secondary;
+    font-weight: 500;
+    padding: 1.5rem 0;
+
+    &::placeholder {
+        font-family: $font-family-secondary;
+        color:$white;
+
+        transition: .2s linear;
+    }
+
+    &:focus {
+        &::placeholder {
+            color:$blue;
+        }
+    }
+
+ 
+}

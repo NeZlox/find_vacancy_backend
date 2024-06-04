@@ -1,0 +1,8 @@
+.worker_link {
+    @include button-style($blue,$white);
+    margin-right: 2rem;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}

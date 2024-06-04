@@ -1,19 +1,19 @@
-FROM python:3.12-slim
+FROM node:latest AS builder
 
-WORKDIR /vacancy
+WORKDIR /client
 
-COPY requirements.txt .
+COPY package*.json ./
 
-RUN pip install -r requirements.txt
+RUN npm install
 
 COPY . .
 
+RUN npm run build
 
-# Make entrypoint.sh executable
-RUN chmod +x entrypoint.sh
+# Отдельный этап для запуска Nginx
+FROM nginx:alpine
 
-# Use the entrypoint.sh script as the entrypoint for the container
-#ENTRYPOINT ["./entrypoint.sh"]
+COPY --from=builder /client/build /usr/share/nginx/html
 
-
-
+COPY nginx.conf /etc/nginx/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]

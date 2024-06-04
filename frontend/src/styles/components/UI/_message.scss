@@ -1,0 +1,21 @@
+.message {
+    @include fade-transition;
+    padding: 1rem 1.8rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    border-radius: $border-radius;
+
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    z-index: 1;
+
+    &.error {
+        background-color: $red;
+    }
+
+    &.access {
+        background-color: $green;
+    }
+}
