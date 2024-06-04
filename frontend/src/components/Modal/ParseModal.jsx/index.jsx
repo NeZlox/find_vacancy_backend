@@ -29,16 +29,15 @@ const ParseModal = () => {
     }
 
     const [fetchParse, isParseLoading] = useFetching(async () => {
-
         if (!line) {
             setError("Введите строку по парсингу!");
             return;
         }
-        if (!pageStart) {
+        if (pageStart === "") {
             setError("Введите начальную страницу!");
             return;
         }
-        if (!pageEnd) {
+        if (pageEnd === "") {
             setError("Введите конечную страницу!");
             return;
         }
