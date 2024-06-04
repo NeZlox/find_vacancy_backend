@@ -12,6 +12,13 @@ git clone https://github.com/NeZlox/find_vacancy_backend.git
 cd find_vacancy_backend
 ```
 
+### Скачивание модели
+
+Скачайте предварительно обученную модель и поместите её в папку `src/models/ai-forever_ruBert-large/`. Ссылка на скачивание и список файлов модели доступны по следующей ссылке:
+
+- `pytorch_model.bin`: [Ссылка на скачивание](https://huggingface.co/ai-forever/ruBert-large/tree/main)
+
+
 ## Запуск проекта локально
 
 ### Необходимые зависимости
