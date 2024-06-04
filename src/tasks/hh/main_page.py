@@ -20,7 +20,7 @@ async def main_page_process(country: str, name:str, page:int) -> List[str]:
         url = f'https://hh.ru/search/vacancy?text={name}&page={page}'
 
 
-    logger.info(f"\nUrl main_page  {url}\n")
+    #logger.info(f"\nUrl main_page  {url}\n")
 
     content_bs4 = await get_content(url)
     data = []
