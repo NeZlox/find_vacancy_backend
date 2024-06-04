@@ -1,7 +1,7 @@
 from typing import Any, List, Literal, Optional
 
 from pydantic import BaseModel, Field, model_validator
-
+from fastapi import HTTPException, status
 from src.database.schemas import Vacancy_Schema
 
 
@@ -16,10 +16,10 @@ class None_ListResponse(Response_Schemas):
 class findVacancy_QueryParamsSchemas(BaseModel):
     search_line: str
 
+
 class Vacancy_DTO(Vacancy_Schema):
     url: str
     skills: Optional[List[str]] = None
-
 
 
 class temp(BaseModel):
@@ -29,28 +29,27 @@ class temp(BaseModel):
     experience: Optional[str] = None
     work_format: Optional[str] = None
     description: Optional[str] = None
-    #vacancy_vector: Optional[str] = None
+    # vacancy_vector: Optional[str] = None
 
-    #id_url: int
+    # id_url: int
 
     url: str
     skills: Optional[List[str]] = None
-class Vacancy_ListResponse(Response_Schemas):
 
+
+class Vacancy_ListResponse(Response_Schemas):
     data: List[temp]
 
 
 class Parsing_QueryParams(BaseModel):
-    country: str = Field(default='volgograd', description="Country name")
-    name: str = Field(default='programmist', description="Vacancy name")
-    page_start: int = Field(default=0, description="Start page", ge=0)
-    page_end: int = Field(default=0, description="End page", ge=0)
+    country: str = Field(description="Country name") # ,default='volgograd')
+    name: str = Field(description="Vacancy name")#    ,default='programmist')
+    page_start: int = Field(description="Start page", ge=0) #   ,default=0,)
+    page_end: int = Field(description="End page", ge=0) #   ,default=0,)
 
     @model_validator(mode='after')
     def validate_page(cls, value):
         if value.page_start > value.page_end:
-            raise ValueError("page_start must be less than page_end")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail="Page start must be less than or equal to the page end")
         return value
-
-
-

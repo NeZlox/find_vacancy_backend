@@ -4,14 +4,14 @@ import { setActive } from "../../../store/slices/modalSlice";
 import { Transition } from "react-transition-group";
 import useFetching from "../../../hooks/useFetching";
 import ApiService from "../../../api/ApiService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import messageTrigger from "../../../utils/messageTrigger";
 
 const ParseModal = () => {
     const dispatch = useDispatch();
     const active = useSelector((state) => state.modal.active);
 
-    const [country, setCountry] = useState("");
+    const [country, setCountry] = useState("moscow");
     const [line, setLine] = useState("");
     const [pageStart, setPageStart] = useState("");
     const [pageEnd, setPageEnd] = useState("");
@@ -29,9 +29,26 @@ const ParseModal = () => {
             messageTrigger(dispatch, "Успешно", "access", 2000);
         }
     });
+   
 
+    const countries = [
+        {country:"Москва",abbr:"moscow"},
+        {country:"Санкт-Петербург", abbr:"spb"},
+        {country:"Волгоград", abbr:"volgograd"},
+        {country:"Владивосток", abbr:"vladivostok"},
+        {country:"Воронеж", abbr:"voronezh"},
+        {country:"Краснодар", abbr:"krasnodar"},
+        {country:"Красноярск", abbr:"krasnoyarsk"},
+        {country:"Сочи", abbr:"sochi"},
+        {country:"Саратов", abbr:"saratov"}
+    ];
 
-    const countries = ["Москва","Санкт-Петербург","Волгоград","Владивосток","Воронеж","Краснодар","Красноярск","Сочи","Саратов"];
+    useEffect(() => {
+        setCountry("moscow");
+        setLine("");
+        setPageStart("");
+        setPageEnd("");
+    },[active]);
 
     return (
         <Transition in={active} timeout={300} unmountOnExit={true}>
@@ -42,7 +59,7 @@ const ParseModal = () => {
                         <h1 className="input__block__title">Город</h1>
                         <select onChange={(e) => setCountry(e.target.value)} className="input__block__text" >
                             {countries.map(country => (
-                                <option value={country}>{country}</option>
+                                <option value={country.abbr}>{country.country}</option>
                             ))}
                         </select>
                        
@@ -66,7 +83,7 @@ const ParseModal = () => {
                         <input
                             onChange={(e) => setPageStart(e.target.value)}
                             value={pageStart}
-                            type="text"
+                            type="number"
                             placeholder="Введите начальную страницу..."
                             className="input__block__text"
                         />
@@ -78,7 +95,7 @@ const ParseModal = () => {
                         <input
                             onChange={(e) => setPageEnd(e.target.value)}
                             value={pageEnd}
-                            type="text"
+                            type="number"
                             placeholder="Введите конечную страницу..."
                             className="input__block__text"
                         />

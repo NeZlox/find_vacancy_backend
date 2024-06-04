@@ -15,6 +15,7 @@ async def main_page_process(country: str, name:str, page:int) -> List[str]:
     #logger.info(f"Thread {thread_id}: Processing page {page}")
     #url = f'https://{country}.hh.ru/vacancies/{name}?page={page}'
     url = f'https://{country}.hh.ru/search/vacancy?text={name}&page={page}'
+
     if country == 'moscow':
         url = f'https://hh.ru/search/vacancy?text={name}&page={page}'
 
