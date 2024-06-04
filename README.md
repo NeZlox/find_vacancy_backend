@@ -50,9 +50,6 @@ alembic upgrade head
 Запустите Redis самостоятельно, затем выполните следующие команды для запуска Celery и Uvicorn:
 
 ```sh
-celery -A src.tasks.tasks:celery flower
-
-
 # Выберите один из вариантов 1 или 2:
 # 1
 celery -A src.tasks.celery_app:celery worker --loglevel=INFO --pool=solo
@@ -60,6 +57,7 @@ celery -A src.tasks.celery_app:celery worker --loglevel=INFO --pool=solo
 celery -A src.tasks.celery_app:celery worker --loglevel=INFO --concurrency=4 --pool=threads
 
 
+celery -A src.tasks.tasks:celery flower
 uvicorn src.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
