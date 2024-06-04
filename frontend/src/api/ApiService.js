@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api_get_vacancy } from "./config";
+import { api_get_vacancy,api_parse } from "./config";
 
 axios.defaults.withCredentials = true;
 
@@ -11,7 +11,14 @@ class ApiService {
     }
 
     static async startParse(country="",name="",page_start=0,page_end=0) {
-        const response = await axios.get(api_get_vacancy, string);
+        const response = await axios.get(api_parse, {
+            params: {
+                country,
+                name,
+                page_start,
+                page_end
+            }
+        });
 
         return response.data.data;
     }
