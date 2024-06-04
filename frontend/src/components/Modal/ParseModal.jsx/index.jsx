@@ -13,10 +13,41 @@ const ParseModal = () => {
 
     const [country, setCountry] = useState("moscow");
     const [line, setLine] = useState("");
-    const [pageStart, setPageStart] = useState("");
-    const [pageEnd, setPageEnd] = useState("");
+    const [pageStart, setPageStart] = useState(0);
+    const [pageEnd, setPageEnd] = useState(0);
+    const [error,setError] = useState("");
+
+    const numberValidate = (side,value) => {
+        if (value.length && value[value.length-1] == '.') return;
+        if (!isNaN(Number(value))) {
+            if (side == "Start") {
+                setPageStart(value.length ? Number(value) : "");
+            } else {
+                setPageEnd(value.length ? Number(value) : "");
+            }
+        }
+    }
 
     const [fetchParse, isParseLoading] = useFetching(async () => {
+
+        if (!line) {
+            setError("Введите строку по парсингу!");
+            return;
+        }
+        if (!pageStart) {
+            setError("Введите начальную страницу!");
+            return;
+        }
+        if (!pageEnd) {
+            setError("Введите конечную страницу!");
+            return;
+        }
+
+        if (pageStart > pageEnd) {
+            setError("Начальная страница должна быть меньше конечной!");
+            return;
+        }
+
         const response = ApiService.startParse(
             country,
             line,
@@ -81,9 +112,9 @@ const ParseModal = () => {
                             Начальная страница
                         </h1>
                         <input
-                            onChange={(e) => setPageStart(e.target.value)}
+                            onChange={(e) => numberValidate("Start",e.target.value)}
                             value={pageStart}
-                            type="number"
+                            type="text"
                             placeholder="Введите начальную страницу..."
                             className="input__block__text"
                         />
@@ -93,9 +124,9 @@ const ParseModal = () => {
                             Конечная страница
                         </h1>
                         <input
-                            onChange={(e) => setPageEnd(e.target.value)}
+                            onChange={(e) => numberValidate("End",e.target.value)}
                             value={pageEnd}
-                            type="number"
+                            type="text"
                             placeholder="Введите конечную страницу..."
                             className="input__block__text"
                         />
@@ -104,6 +135,7 @@ const ParseModal = () => {
                     <h1 className="modal__parse" onClick={() => fetchParse()}>
                         Запарсить
                     </h1>
+                    <h1 className="modal__error">{error}</h1>
                 </Modal>
             )}
         </Transition>
