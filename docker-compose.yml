@@ -55,8 +55,8 @@ services:
     image: vacancy_frontend:latest
     restart: always
     container_name: vacancy_frontend
-    depends_on:
-      - flower
+    #depends_on:
+    #  - vacancy_backend
 
 
 volumes:
