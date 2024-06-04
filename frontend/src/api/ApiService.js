@@ -5,7 +5,11 @@ axios.defaults.withCredentials = true;
 
 class ApiService {
     static async getVacancy(string) {
-        const response = await axios.get(api_get_vacancy, string);
+        const response = await axios.get(api_get_vacancy, {
+            params: {
+                search_line: string
+            }
+        });
 
         return response.data.data;
     }

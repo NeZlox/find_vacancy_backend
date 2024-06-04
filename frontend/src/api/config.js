@@ -4,11 +4,11 @@ const api_url = "http://127.0.0.1:8000";
 
 // PROD
 
-export const api_get_vacancy = "/api/vacancy/";
+export const api_get_vacancy = `${api_url}/api/vacancy/`;
 // // /api/v1/start_parsing/
 // // /practice/getVacancy.php
 
-export const api_parse = "/api/start_parsing/";
+export const api_parse = `${api_url}/api/start_parsing/`;
 // // /api/v1/start_parsing/
 // // /queries/saveDescription.php
 
