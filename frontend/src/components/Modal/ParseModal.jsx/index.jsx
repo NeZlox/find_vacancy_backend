@@ -25,24 +25,27 @@ const ParseModal = () => {
         );
 
         if (!isParseLoading) {
-            setActive(false);
+            dispatch(setActive(false));
             messageTrigger(dispatch, "Успешно", "access", 2000);
         }
     });
+
+
+    const countries = ["Москва","Санкт-Петербург","Волгоград","Владивосток","Воронеж","Краснодар","Красноярск","Сочи","Саратов"];
+
     return (
         <Transition in={active} timeout={300} unmountOnExit={true}>
             {(state) => (
                 <Modal active={state} setActive={() => dispatch(setActive())}>
                     <h1 className="modal__title">Парсинг вакансий</h1>
                     <div className="input__block">
-                        <h1 className="input__block__title">Страна</h1>
-                        <input
-                            onChange={(e) => setCountry(e.target.value)}
-                            value={country}
-                            type="text"
-                            placeholder="Введите страну..."
-                            className="input__block__text"
-                        />
+                        <h1 className="input__block__title">Город</h1>
+                        <select onChange={(e) => setCountry(e.target.value)} className="input__block__text" >
+                            {countries.map(country => (
+                                <option value={country}>{country}</option>
+                            ))}
+                        </select>
+                       
                     </div>
                     <div className="input__block">
                         <h1 className="input__block__title">

@@ -31,7 +31,7 @@ async def get_vacancy(query_params: findVacancy_QueryParamsSchemas = Depends()):
 @router.get("/start_parsing/", response_model=None_ListResponse)
 async def start_parsing(query_params: Parsing_QueryParams = Depends()):
     try:
-        print(query_params)
+
         await Common_Service.start_parsing(**query_params.model_dump(mode='python'))
 
         result = {
