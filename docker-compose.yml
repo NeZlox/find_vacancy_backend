@@ -7,8 +7,7 @@ services:
     ports:
       - "16740:80"
     depends_on:
-      #- vacancy_frontend
-      - vacancy_backend
+      - vacancy_frontend
     volumes:
       - "./nginx.conf:/etc/nginx/conf.d/default.conf"
     restart: always
@@ -55,8 +54,8 @@ services:
     image: vacancy_frontend:latest
     restart: always
     container_name: vacancy_frontend
-    #depends_on:
-    #  - vacancy_backend
+    depends_on:
+      - vacancy_backend
 
 
 volumes:
